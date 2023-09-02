@@ -16,22 +16,24 @@ function PlayerRow(props) {
     for (const [i, player] of props.players.entries()) {
         const FIXT = player.get_fixture(props.gw);
         var trans = false;
-        for (const [i, t] of props.transfers.entries()) {
-            if (t.pos === player.pos && t.id === player.id) trans = t.in_team !== props.out_trans[i].out_team;
+        if (props.gw > 1) {
+            for (const [i, t] of props.transfers.entries()) {
+                if (t.pos === player.pos && t.id === player.id) trans = t.in_team !== props.out_trans[i].out_team;
+            }
         }
         var next_fix_row = []
         for (var j = 0; j < 4; j++) {
             const g = props.gw + j;
             const brd_right = j < 3 && g < 36 ? " brd-right" : "";
-            if(g >= 38) break;
+            if (g >= 38) break;
             next_fix_row.push(
-                <div className={'f1 fix_icon brd-top fdr_' + player.get_fixture(g+1).fdr + brd_right} key={j}>
-                    
+                <div className={'f1 fix_icon brd-top fdr_' + player.get_fixture(g + 1).fdr + brd_right} key={j}>
+
                 </div>
             )
         }
         players.push(
-            <div className={"cp mall w20p brd " + "fdr_" + FIXT.fdr}
+            <div className={"cp mall w20p brd fdr_" + FIXT.fdr}
                 key={i}
                 onClick={() => props.onClickPlayer(player.pos, player.id, props.gw)}
             >
@@ -106,11 +108,14 @@ export function GameWeek(props) {
                 transfers={props.trans}
                 out_trans={props.team.out_trans}
             />
-            <TransferView
-                transfers={props.trans}
-                out_trans={props.team.out_trans}
-                onDelTrans={(gw, id) => props.onDelTrans(gw, id)}
-            />
+            {props.gw > 1 ?
+                <TransferView
+                    transfers={props.trans}
+                    out_trans={props.team.out_trans}
+                    onDelTrans={(gw, id) => props.onDelTrans(gw, id)}
+                />
+                :
+                null}
             <TeamErr
                 errs={props.team.team.checkValid()}
             />

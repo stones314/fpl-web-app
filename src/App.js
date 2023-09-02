@@ -56,13 +56,11 @@ function App() {
     setSelected(new_sel);
   }
 
-  function onClickTeam(team_name) {
+  function onClickTeam(team_name, pos, id) {
     var new_team = new FplTeamData(team);
-    new_team.players[selected.pos][selected.id].team = team_name;
+    new_team.players[pos][id].team = team_name;
     setTeam(new_team)
     setTearErr(new_team.checkValid());
-    var new_sel = { pos: "", id: -1 };
-    setSelected(new_sel);
     if (isTeamFull()) {
       setPageState(PAGE_LOAD)
       GameWeekCalc(new_team, trans.gws, (new_gws, fdr_total) => onGwsCalcComplete(new_gws, fdr_total), startGw)
@@ -78,9 +76,13 @@ function App() {
   }
 
   function onClickTransTeam(team_name) {
-    var new_trans = new TransferList(trans);
     var new_sel = { pos: "", id: -1, gw: 0 };
     setGwpSel(new_sel);
+    if(gwpSel.gw === 1){
+      onClickTeam(team_name, gwpSel.pos, gwpSel.id);
+      return;
+    }
+    var new_trans = new TransferList(trans);
     new_trans.add_transfer(gwpSel.gw, gwpSel.pos, team_name, gwpSel.id);
     setTrans(new_trans);
     setPageState(PAGE_LOAD);
@@ -175,11 +177,7 @@ function App() {
 
   if (pageState === PAGE_LOAD) return null;
 
-  return (
-    <div className="col center">
-      <b>
-        Fixture Planner
-      </b>
+  /*
       <FplTeam
         gks={team.players["GK"]}
         defs={team.players["DEF"]}
@@ -193,8 +191,17 @@ function App() {
         errs={teamErr}
       />
       {renderTeamSelect()}
+  */
+  return (
+    <div className="col center">
+      <b>
+        Fixture Planner
+      </b>
       <div className='center small-txt'>
-        The starting XI with minimum FDR is shown for each gameweek below.
+        Select a starting team for gameweek one.
+      </div>
+      <div className='center small-txt'>
+        Starting XI with a minimum FDR is shown for each gameweek.
       </div>
       <div className='center small-txt'>
         Click on a player in a gameweek to make a transfer for that gameweek and forward.

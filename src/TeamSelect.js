@@ -16,7 +16,7 @@ export function TeamSelect(props) {
             )
         }
         teams.push(
-            <div className='brd w10 mall1 cp center' onClick={() => props.onClickTeam(team)} key={i}>
+            <div className={"brd w10 mall1 cp center fdr_" + FIXTURES[team][props.gw-1].fdr} onClick={() => props.onClickTeam(team)} key={i}>
                 <div className={""}>
                     <img className="shirt trans-mid" src={IMG[team]} alt={team} />
                 </div>
