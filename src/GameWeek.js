@@ -1,5 +1,6 @@
-import { FIXTURES, TEAMS, POSITIONS, PlayerData, IMG } from "./Data.js"
+import { IMG } from "./Data.js"
 import { TransferView } from "./Transfer.js";
+import { TeamErr } from "./FplTeam.js";
 import './App.css';
 
 function PlayerRow(props) {
@@ -18,6 +19,17 @@ function PlayerRow(props) {
         for (const [i, t] of props.transfers.entries()) {
             if (t.pos === player.pos && t.id === player.id) trans = t.in_team !== props.out_trans[i].out_team;
         }
+        var next_fix_row = []
+        for (var j = 0; j < 4; j++) {
+            const g = props.gw + j;
+            const brd_right = j < 3 && g < 36 ? " brd-right" : "";
+            if(g >= 38) break;
+            next_fix_row.push(
+                <div className={'f1 fix_icon brd-top fdr_' + player.get_fixture(g+1).fdr + brd_right} key={j}>
+                    
+                </div>
+            )
+        }
         players.push(
             <div className={"cp mall w20p brd " + "fdr_" + FIXT.fdr}
                 key={i}
@@ -29,11 +41,14 @@ function PlayerRow(props) {
                     </div>
                     {add_new_icon(trans)}
                 </div>
-                <div className="">
-                    {player.team}
+                <div className={""}>
+                    <img className="shirt trans-mid" src={IMG[player.team]} alt={player.team} />
                 </div>
                 <div className="small-txt">
                     {FIXT.opponent + " (" + FIXT.site + ")"}
+                </div>
+                <div className={"small-txt row"}>
+                    {next_fix_row}
                 </div>
             </div>
         )
@@ -48,7 +63,7 @@ function PlayerRow(props) {
 export function GameWeek(props) {
     return (
         <div className={"col"}>
-            <div className={"mid brd fdr_" + props.team.fdr_col}>
+            <div className={"mid cp brd fdr_" + props.team.fdr_col} onClick={() => props.onClickGw(props.gw)}>
                 {"Gameweek " + props.gw + " (" + props.team.fdr_sum + " FDR)"}
             </div>
             <PlayerRow
@@ -94,6 +109,10 @@ export function GameWeek(props) {
             <TransferView
                 transfers={props.trans}
                 out_trans={props.team.out_trans}
+                onDelTrans={(gw, id) => props.onDelTrans(gw, id)}
+            />
+            <TeamErr
+                errs={props.team.team.checkValid()}
             />
         </div>
     );

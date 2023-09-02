@@ -1,3 +1,4 @@
+import { IMG } from "./Data.js"
 
 export class Transfer {
     constructor(pos, in_team, gw, id) {
@@ -25,13 +26,17 @@ export class TransferList {
     add_transfer(gw, pos, in_team, id) {
         // see if we update an existing transfer first:
         for (const [i, trans] of this.gws[gw - 1].entries()) {
-            if (trans.pos === pos && trans.id === id){
+            if (trans.pos === pos && trans.id === id) {
                 this.gws[gw - 1][i].set_in_team(in_team);
                 return;
             }
         }
 
         this.gws[gw - 1].push(new Transfer(pos, in_team, gw, id));
+    }
+    del_transfer(gw, id) {
+        // see if we update an existing transfer first:
+        this.gws[gw - 1].splice(id, 1);
     }
     get_transfers(gw) {
         return this.gws[gw - 1]
@@ -42,16 +47,31 @@ export function TransferView(props) {
     if (props.transfers.length === 0) return null;
     var trans_list = []
     for (const [i, trans] of props.transfers.entries()) {
-        if(props.out_trans[i].out_team === trans.in_team) continue;
+        // if (props.out_trans.length >= i)break;
+        if (props.out_trans[i].out_team === trans.in_team) continue;
         trans_list.push(
-            <div className="small_txt" key={i}>
-                {trans.pos + (trans.id + 1).toString() + " : " + props.out_trans[i].out_team + " => " + trans.in_team}
+            <div className="row center" key={i}>
+                <div className={"f1 mlr3"}>
+                    {trans.pos + (trans.id + 1).toString() + "  "}
+                </div>
+                <div className={"f1 mlr3"}>
+                    <img className="shirt trans-mid" src={IMG[props.out_trans[i].out_team]} alt={props.out_trans[i].out_team} />
+                </div>
+                <div className={"f1 mlr3"}>
+                    {" > "}
+                </div>
+                <div className={"f1 mlr3"}>
+                    <img className="shirt trans-mid" src={IMG[trans.in_team]} alt={trans.in_team} />
+                </div>
+                <div className={"f1 mlr3 brd cp"} onClick={()=>props.onDelTrans(trans.gw, i)}>
+                    DEL
+                </div>
             </div>
         )
     }
     return (
         <div className="small_txt col">
-            {trans_list.length > 0? "Transfers:":null}
+            {trans_list.length > 0 ? "Transfers:" : null}
             {trans_list}
         </div>
     )

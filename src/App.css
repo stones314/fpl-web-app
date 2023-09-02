@@ -94,6 +94,10 @@
   flex-direction: row;
 }
 
+.wrap {
+  flex-wrap: wrap;
+}
+
 .f1 {
   flex: 1;
 }
@@ -122,9 +126,15 @@
   flex: 9;
 }
 
+.mall1 {
+  margin-top: 1px;
+  margin-bottom: 1px;
+  margin-left: 1px;
+  margin-right: 1px;
+}
 .mlr3 {
-  margin-left: 1vmin;
-  margin-right: 1vmin;
+  margin-left: 1px;
+  margin-right: 1px;
 }
 .mtb2 {
   margin-top: 1vmin;
@@ -155,12 +165,19 @@
   background-color: aquamarine;
 }
 
-.buy {
+.err {
   background-color: lightpink;
 }
 
 .brd {
   border: 1px solid #000000;
+}
+
+.brd-top {
+  border-top: 1px solid #000000;
+}
+.brd-right {
+  border-right: 1px solid #000000;
 }
 
 .kat-opt {
@@ -173,6 +190,14 @@
   height: min(5vmin, 25px);
 }
 
+.fix_icon {
+  height: min(2vw, 5px)
+}
+
+.w10 {
+  width: 8vw;
+}
+
 .btn-img {
   width: min(10vmin, 50px);
 }
@@ -181,6 +206,10 @@
 }
 .new_icon {
   width: 4vw;
+  display: block;
+}
+.shirt {
+  width: 5vw;
   display: block;
 }
 
