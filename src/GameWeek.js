@@ -7,8 +7,8 @@ function PlayerRow(props) {
     function add_new_icon(do_add) {
         if (!do_add) return null;
         return (
-            <div className={"f1"}>
-                <img className="new_icon" src={IMG["new2"]} alt={"new2"} />
+            <div className={"f2"}>
+                <img className="new-icon" src={IMG["new2"]} alt={"new2"} />
             </div>
         )
     }
@@ -22,16 +22,16 @@ function PlayerRow(props) {
         var next_fix_row = []
         for (var j = 0; j < 4; j++) {
             const g = props.gw + j;
-            const brd_right = j < 3 && g < 36 ? " brd-right" : "";
-            if(g >= 38) break;
+            const brd_right = j < 3 && g < 37 ? " brd-right" : "";
+            if (g >= 38) break;
             next_fix_row.push(
-                <div className={'f1 fix_icon brd-top fdr_' + player.get_fixture(g+1).fdr + brd_right} key={j}>
-                    
+                <div className={'f1 fix_icon brd-top fdr_' + player.get_fixture(g + 1).fdr + brd_right} key={j}>
+
                 </div>
             )
         }
         players.push(
-            <div className={"cp mall w20p brd " + "fdr_" + FIXT.fdr}
+            <div className={"cp mall w20p brd"}
                 key={i}
                 onClick={() => props.onClickPlayer(player.pos, player.id, props.gw)}
             >
@@ -41,7 +41,7 @@ function PlayerRow(props) {
                     </div>
                     {add_new_icon(trans)}
                 </div>
-                <div className={""}>
+                <div className={"fdr_" + FIXT.fdr}>
                     <img className="shirt trans-mid" src={IMG[player.team]} alt={player.team} />
                 </div>
                 <div className="small-txt">
@@ -54,7 +54,7 @@ function PlayerRow(props) {
         )
     }
     return (
-        <div className="small row center">
+        <div className="row center">
             {players}
         </div>
     )
@@ -62,7 +62,7 @@ function PlayerRow(props) {
 
 export function GameWeek(props) {
     return (
-        <div className={"col"}>
+        <div className={"col w100p"}>
             <div className={"mid cp brd fdr_" + props.team.fdr_col} onClick={() => props.onClickGw(props.gw)}>
                 {"Gameweek " + props.gw + " (" + props.team.fdr_sum + " FDR)"}
             </div>

@@ -48,16 +48,25 @@
 
 .small {
   position: relative;
-  width: 50vw;
+  width: 50%;
 }
 
 .narrow {
   position: relative;
-  width: min(100vmin, 500px);
+  width: min(100vw, 400px);
+}
+
+.w100p {
+  position: relative;
+  width: 100%;
 }
 
 .w20p {
-  width: 18%
+  width: 19%
+}
+
+.w10 {
+  width: 8.5%;
 }
 
 .wide {
@@ -194,22 +203,19 @@
   height: min(2vw, 5px)
 }
 
-.w10 {
-  width: 8vw;
-}
-
 .btn-img {
-  width: min(10vmin, 50px);
+  width: min(10vw, 50px);
 }
 .icon {
   width: 20px;
 }
-.new_icon {
-  width: 4vw;
+.new-icon {
+  width: 100%;
+  height: 80%;
   display: block;
 }
 .shirt {
-  width: 5vw;
+  width: min(5vw, 25px);
   display: block;
 }
 
@@ -261,11 +267,11 @@ form {
 }
 
 .big-txt {
-  font-size: x-large;
+  font-size: min(3vw, 40px);
 }
 
 .small-txt {
-  font-size: 2vw;
+  font-size: min(1.5vw, 8px);
 }
 .fix-center {
   position: fixed;

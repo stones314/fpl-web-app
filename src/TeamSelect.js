@@ -6,7 +6,7 @@ export function TeamSelect(props) {
     for (const [i, team] of TEAMS.entries()) {
         var next_fix_row = []
         for (var j = 0; j < 4; j++) {
-            const g = props.gw + j - 1;
+            const g = props.gw + j;
             const brd_right = j < 3 && g < 37 ? " brd-right" : "";
             if(g >= 38) break;
             next_fix_row.push(
@@ -16,12 +16,12 @@ export function TeamSelect(props) {
             )
         }
         teams.push(
-            <div className='brd w10 mall1 cp center' onClick={() => props.onClickTeam(team)} key={i}>
-                <div className={""}>
-                    <img className="shirt trans-mid" src={IMG[team]} alt={team} />
-                </div>
-                <div className={"small-txt"}>
+            <div className={"brd w10 mall1 cp center"} onClick={() => props.onClickTeam(team)} key={i}>
+                                <div className={"small-txt"}>
                     {team}
+                </div>
+                <div className={"fdr_" + FIXTURES[team][props.gw-1].fdr}>
+                    <img className="shirt trans-mid" src={IMG[team]} alt={team} />
                 </div>
                 <div className={"small-txt row"}>
                     {next_fix_row}

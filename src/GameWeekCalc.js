@@ -8,18 +8,16 @@ export function GameWeekCalc(start_team, transfers, onCompleted, start_gw) {
     for (var g = 0; g < 38; g++) {
         const gw = g + 1;
         var gw_team = g === 0 ? new FplTeamData(start_team) : new FplTeamData(gws[g - 1].team);
-        //apply transfers for this gw (after start_gw):
+        //apply transfers for this gw:
         var out_trans = []
-        if (gw >= start_gw) {
-            for (const [i, trans] of transfers[g].entries()) {
-                out_trans.push({
-                    pos: trans.pos,
-                    id: trans.id,
-                    out_team: gw_team.players[trans.pos][trans.id].team,
-                    in_team: trans.in_team
-                })
-                gw_team.players[trans.pos][trans.id].team = trans.in_team;
-            }
+        for (const [i, trans] of transfers[g].entries()) {
+            out_trans.push({
+                pos: trans.pos,
+                id: trans.id,
+                out_team: gw_team.players[trans.pos][trans.id].team,
+                in_team: trans.in_team
+            })
+            gw_team.players[trans.pos][trans.id].team = trans.in_team;
         }
         var p_list = []
         for (const [i, pos] of POSITIONS.entries()) {
@@ -81,7 +79,7 @@ export function GameWeekCalc(start_team, transfers, onCompleted, start_gw) {
         if (fdr_sum > 29) fdr_col = 4;
         if (fdr_sum > 33) fdr_col = 5;
 
-        if(gw >= start_gw) fdr_total += fdr_sum;
+        if (gw >= start_gw) fdr_total += fdr_sum;
 
         for (const [i, pos] of POSITIONS.entries()) {
             playing_team[pos].sort((a, b) => a.id - b.id);

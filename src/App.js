@@ -158,8 +158,8 @@ function App() {
       if (gwpSel.gw >= g+1 && gwpSel.gw < g+1 + COLS)
         show_team_select = true;
       gws_view.push(
-        <div className='col' key={g}>
-          <div className='row'>
+        <div className='col w100p' key={g}>
+          <div className='row w100p'>
             {row}
           </div>
           {show_team_select ? renderTransTeamSelect() : null}
@@ -167,7 +167,7 @@ function App() {
       )
     }
     return (
-      <div className='col center'>
+      <div className='col w100p center'>
         {gws_view}
       </div>
     )
@@ -175,11 +175,29 @@ function App() {
 
   if (pageState === PAGE_LOAD) return null;
 
+  /*
+      <FplTeam
+        gks={team.players["GK"]}
+        defs={team.players["DEF"]}
+        mids={team.players["MID"]}
+        fwds={team.players["FWD"]}
+        selPos={selected.pos}
+        selId={selected.id}
+        onClickPlayer={(pos, id) => onClickPlayer(pos, id)}
+      />
+      <TeamErr
+        errs={teamErr}
+      />
+      {renderTeamSelect()}
+*/
   return (
-    <div className="col center">
+    <div className="narrow col center trans-mid">
       <b>
         Fixture Planner
       </b>
+      <div className='center small-txt'>
+        Select a starting team here.
+      </div>
       <FplTeam
         gks={team.players["GK"]}
         defs={team.players["DEF"]}
@@ -194,7 +212,7 @@ function App() {
       />
       {renderTeamSelect()}
       <div className='center small-txt'>
-        The starting XI with minimum FDR is shown for each gameweek below.
+        Starting XI with a minimum FDR is shown for each gameweek.
       </div>
       <div className='center small-txt'>
         Click on a player in a gameweek to make a transfer for that gameweek and forward.

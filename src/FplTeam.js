@@ -87,7 +87,7 @@ function PlayerRow(props) {
         if (player.pos === props.selPos && i === props.selId)
             sel = " sel"
         players.push(
-            <div className={"cp mall w20p brd" + sel} onClick={() => props.onClickPlayer(player.pos, i)} key={i}>
+            <div className={"cp mall w10 brd" + sel} onClick={() => props.onClickPlayer(player.pos, i)} key={i}>
                 <div className="small-txt f3">
                     {player.pos + (player.id + 1).toString()}
                 </div>
@@ -101,7 +101,7 @@ function PlayerRow(props) {
         )
     }
     return (
-        <div className="small row center">
+        <div className="row center w100p">
             {players}
         </div>
     )
@@ -109,10 +109,7 @@ function PlayerRow(props) {
 
 export function FplTeam(props) {
     return (
-        <div className={"col center"}>
-            <div className="">
-                Select starting team here
-            </div>
+        <div className={"col center w100p"}>
             <PlayerRow
                 name="GK"
                 players={props.gks}
