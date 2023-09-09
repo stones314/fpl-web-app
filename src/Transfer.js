@@ -1,4 +1,4 @@
-import { IMG } from "./Data.js"
+import { FIXTURES, IMG } from "./Data.js"
 
 export class Transfer {
     constructor(pos, in_team, gw, id) {
@@ -54,16 +54,22 @@ export function TransferView(props) {
                 <div className={"f1 mlr3"}>
                     {trans.pos + (trans.id + 1).toString() + "  "}
                 </div>
-                <div className={"f1 mlr3"}>
-                    <img className="shirt trans-mid" src={IMG[props.out_trans[i].out_team]} alt={props.out_trans[i].out_team} />
+                <div className={"f1 mlr3 fdr_" + FIXTURES[props.out_trans[i].out_team][trans.gw - 1].fdr}>
+                    <img className={"shirt trans-mid"}
+                        src={IMG[props.out_trans[i].out_team]}
+                        alt={props.out_trans[i].out_team}
+                    />
                 </div>
                 <div className={"f1 mlr3"}>
                     {" > "}
                 </div>
-                <div className={"f1 mlr3"}>
-                    <img className="shirt trans-mid" src={IMG[trans.in_team]} alt={trans.in_team} />
+                <div className={"f1 mlr3 fdr_" + FIXTURES[trans.in_team][trans.gw - 1].fdr}>
+                    <img className={"shirt trans-mid"}
+                        src={IMG[trans.in_team]}
+                        alt={trans.in_team}
+                    />
                 </div>
-                <div className={"f1 mlr3 brd cp"} onClick={()=>props.onDelTrans(trans.gw, i)}>
+                <div className={"f1 mlr3 brd cp"} onClick={() => props.onDelTrans(trans.gw, i)}>
                     DEL
                 </div>
             </div>

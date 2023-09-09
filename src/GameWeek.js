@@ -22,13 +22,21 @@ function PlayerRow(props) {
         var next_fix_row = []
         for (var j = 0; j < 4; j++) {
             const g = props.gw + j;
-            const brd_right = j < 3 && g < 37 ? " brd-right" : "";
-            if (g >= 38) break;
-            next_fix_row.push(
-                <div className={'f1 fix_icon brd-top fdr_' + player.get_fixture(g + 1).fdr + brd_right} key={j}>
+            const brd_right = j < 3 ? " brd-right" : "";
+            if (g >= 38) {
+                next_fix_row.push(
+                    <div className={'f1 fix_icon brd-top'} key={j}>
 
-                </div>
-            )
+                    </div>
+                )
+            }
+            else {
+                next_fix_row.push(
+                    <div className={'f1 fix_icon brd-top fdr_' + player.get_fixture(g + 1).fdr + brd_right} key={j}>
+
+                    </div>
+                )
+            }
         }
         players.push(
             <div className={"cp mall w20p brd"}
