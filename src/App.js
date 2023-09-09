@@ -27,7 +27,11 @@ function App() {
   const [pageState, setPageState] = useState(PAGE_LOAD)
   const [gws, setGws] = useState(undefined)
   const [gwpSel, setGwpSel] = useState({ pos: "NA", id: -1, gw: 0 })
-  const [startGw, setStartGw] = useState(1)
+  const [startGw, setStartGw] = useState(
+    cookies.get("fpl_start")
+      ? cookies.get("fpl_start")
+      : 1
+  )
   const [teamErr, setTearErr] = useState([])
 
   useEffect(() => {
@@ -103,6 +107,7 @@ function App() {
       s = 1;
     }
     setStartGw(s);
+    cookies.set("fpl_start", s, { path: "/" });
     setPageState(PAGE_LOAD);
     GameWeekCalc(team, trans.gws, (new_gws, fdr_total) => onGwsCalcComplete(new_gws, fdr_total), s);
   }
@@ -221,7 +226,7 @@ function App() {
         Click on a gameweek header to start from that gameweek. Click again to reset.
       </div>
       <div className='center small-txt'>
-        Note: Your starting team and transfers are stored as cookies on your device.
+        Note: Your starting team, transfers and start GW are stored as cookies.
       </div>
       {renderGameWeek()}
     </div>
