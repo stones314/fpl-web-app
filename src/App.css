@@ -219,6 +219,10 @@
   display: block;
 }
 
+.fdr_h {
+  flex: 1;
+}
+
 .txt-left {
   text-align: left;
 }
@@ -268,6 +272,10 @@ form {
 
 .big-txt {
   font-size: min(3vw, 40px);
+}
+
+.mid-txt {
+  font-size: min(2vw, 16px);
 }
 
 .small-txt {

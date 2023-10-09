@@ -7,9 +7,11 @@ import { TeamSelect } from "./TeamSelect.js"
 import { GameWeek } from './GameWeek';
 import { GameWeekCalc } from './GameWeekCalc';
 import { TransferList } from './Transfer';
+import { FdrView } from './FdrWiew';
 
 const PAGE_LOAD = 1;
 const PAGE_READY = 2;
+const FDR_VIEW = 3;
 
 function App() {
   const cookies = new Cookies();
@@ -50,7 +52,7 @@ function App() {
 
   function onGwsCalcComplete(new_gws, fdr_total) {
     setGws(new_gws)
-    setPageState(PAGE_READY)
+    setPageState(FDR_VIEW)
   }
 
   function onClickPlayer(pos, i) {
@@ -178,23 +180,19 @@ function App() {
     )
   }
 
+  function renderBody(){
+    if(pageState === FDR_VIEW){
+      return(<FdrView
+        gw={startGw}
+      />)
+    }
+    else{
+      return(renderGameWeek())
+    }
+  }
+
   if (pageState === PAGE_LOAD) return null;
 
-  /*
-      <FplTeam
-        gks={team.players["GK"]}
-        defs={team.players["DEF"]}
-        mids={team.players["MID"]}
-        fwds={team.players["FWD"]}
-        selPos={selected.pos}
-        selId={selected.id}
-        onClickPlayer={(pos, id) => onClickPlayer(pos, id)}
-      />
-      <TeamErr
-        errs={teamErr}
-      />
-      {renderTeamSelect()}
-*/
   return (
     <div className="narrow col center trans-mid">
       <b>
@@ -228,7 +226,7 @@ function App() {
       <div className='center small-txt'>
         Note: Your starting team, transfers and start GW are stored as cookies.
       </div>
-      {renderGameWeek()}
+      {renderBody()}
     </div>
   );
 }
