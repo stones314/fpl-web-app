@@ -46,6 +46,17 @@
   transform: translate(-50%, 0%);
 }
 
+.trans-vmid {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.xsmall {
+  position: relative;
+  width: min(18vw, 70px);
+}
 .small {
   position: relative;
   width: 50%;
@@ -266,8 +277,11 @@ form {
   flex-direction: column;
 }
 
+.xbig-txt {
+  font-size: min(3vw, 15px);
+}
 .big-txt {
-  font-size: min(3vw, 40px);
+  font-size: min(3vw, 15px);
 }
 
 .small-txt {
@@ -282,10 +296,18 @@ form {
   transform: translate(-50%, 0%);
 }
 
+.tex-vmid {
+  justify-content: center;
+}
+
 .add_h {
   height: 15vh;
 }
 
 .cp {
   cursor: pointer;
+}
+
+.opac {
+  opacity: 40%;
 }

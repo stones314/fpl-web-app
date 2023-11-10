@@ -33,7 +33,7 @@ function PlayerRow(props) {
             else {
                 next_fix_row.push(
                     <div className={'f1 fix_icon brd-top fdr_' + player.get_fixture(g + 1).fdr + brd_right} key={j}>
-
+                        
                     </div>
                 )
             }
@@ -44,9 +44,13 @@ function PlayerRow(props) {
                 onClick={() => props.onClickPlayer(player.pos, player.id, props.gw)}
             >
                 <div className="row">
-                    <div className="small-txt f3">
-                        {player.pos + (player.id + 1).toString()}
-                    </div>
+                    {props.name === "Bench" ?
+                        <div className="small-txt f3">
+                            {player.pos}
+                        </div>
+                        :
+                        null
+                    }
                     {add_new_icon(trans)}
                 </div>
                 <div className={"fdr_" + FIXT.fdr}>

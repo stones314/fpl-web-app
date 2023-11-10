@@ -20,7 +20,9 @@ export const IMG = {
   "BUR": "https://rygg-gaard.no/fpl/img/bur.PNG",
   "LIV": "https://rygg-gaard.no/fpl/img/liv.PNG",
   "new": "https://rygg-gaard.no/fpl/img/new.png",
-  "new2": "https://rygg-gaard.no/fpl/img/new2.png"
+  "new2": "https://rygg-gaard.no/fpl/img/new2.png",
+  "pluss" : "https://rygg-gaard.no/quiz/img/AddBtn.png",
+  "minus" : "https://rygg-gaard.no/quiz/img/MinusBtn.png",
 }
 
 export const FIXTURES = {

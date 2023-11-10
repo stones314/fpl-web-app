@@ -1,7 +1,7 @@
 import './App.css';
 import { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
-import { POSITIONS } from "./Data.js"
+import { POSITIONS, IMG } from "./Data.js"
 import { FplTeam, FplTeamData, TeamErr } from "./FplTeam.js"
 import { TeamSelect } from "./TeamSelect.js"
 import { GameWeek } from './GameWeek';
@@ -92,19 +92,19 @@ function App() {
     cookies.set("fpl_trans", new_trans, { path: "/" });
   }
 
-  function onDelTrans(gw, id){
+  function onDelTrans(gw, id) {
     var new_trans = new TransferList(trans);
-    new_trans.del_transfer(gw,id);
+    new_trans.del_transfer(gw, id);
     setTrans(new_trans);
     setPageState(PAGE_LOAD);
     GameWeekCalc(team, new_trans.gws, (new_gws, fdr_total) => onGwsCalcComplete(new_gws, fdr_total), startGw);
     cookies.set("fpl_trans", new_trans, { path: "/" });
   }
 
-  function onClickGw(gw){
+  function onClickGw(gw) {
     var s = gw;
-    if (gw === startGw){
-      s = 1;
+    if (gw === startGw && s > 1) {
+      s--;
     }
     setStartGw(s);
     cookies.set("fpl_start", s, { path: "/" });
@@ -136,17 +136,52 @@ function App() {
     )
   }
 
+  function renderGwSelect() {
+    return (
+      <div className='narrow row center mtb2'>
+        <div className='f3 big-txt'>
+        </div>
+        <div className='f4 big-txt'>
+          {"Start from GW:"}
+        </div>
+        <div className='f2 row'>
+          {startGw > 1 ?
+            <div className='f1 cp xbig-txt' onClick={() => { setStartGw(startGw - 1) }}>
+              {"<"}
+            </div>
+            : <div className='f1 opac xbig-txt'>
+              {"<"}
+            </div>
+          }
+          <div className='f1 xbig-txt'>
+            {startGw}
+          </div>
+          {startGw < 38 ?
+            <div className='f1 cp xbig-txt' onClick={() => { setStartGw(startGw + 1) }}>
+              {">"}
+            </div>
+            : <div className='f1 opac xbig-txt'>
+              {">"}
+            </div>
+          }
+        </div>
+        <div className='f4 big-txt'>
+        </div>
+      </div>
+    )
+  }
+
   function renderGameWeek() {
     if (!isTeamFull()) return null;
     if (pageState === PAGE_LOAD) return null;
     var gws_view = [];
     const MAX_GW = 38;
     const COLS = 2;
-    for(var g = startGw-1; g < MAX_GW; g += COLS){
+    for (var g = startGw - 1; g < MAX_GW; g += COLS) {
       var row = [];
-      for(var j = 0; j < COLS; j++){
-        const gw = g+j+1;
-        if(gw > MAX_GW) break;
+      for (var j = 0; j < COLS; j++) {
+        const gw = g + j + 1;
+        if (gw > MAX_GW) break;
         row.push(
           <GameWeek
             team={gws[gw - 1]}
@@ -154,13 +189,13 @@ function App() {
             gw={gw}
             key={j}
             onClickPlayer={(pos, id, gw) => onClickGwPlayer(pos, id, gw)}
-            onDelTrans={(gw,id) => onDelTrans(gw,id)}
+            onDelTrans={(gw, id) => onDelTrans(gw, id)}
             onClickGw={(gw) => onClickGw(gw)}
           />
         )
       }
       var show_team_select = false;
-      if (gwpSel.gw >= g+1 && gwpSel.gw < g+1 + COLS)
+      if (gwpSel.gw >= g + 1 && gwpSel.gw < g + 1 + COLS)
         show_team_select = true;
       gws_view.push(
         <div className='col w100p' key={g}>
@@ -201,7 +236,7 @@ function App() {
         Fixture Planner
       </b>
       <div className='center small-txt'>
-        Select a starting team here.
+        Select initial team here.
       </div>
       <FplTeam
         gks={team.players["GK"]}
@@ -216,17 +251,12 @@ function App() {
         errs={teamErr}
       />
       {renderTeamSelect()}
+      {renderGwSelect()}
       <div className='center small-txt'>
-        Starting XI with a minimum FDR is shown for each gameweek.
+        Starting XI with lowest FDR is shown each gameweek.
       </div>
       <div className='center small-txt'>
         Click on a player in a gameweek to make a transfer for that gameweek and forward.
-      </div>
-      <div className='center small-txt'>
-        Click on a gameweek header to start from that gameweek. Click again to reset.
-      </div>
-      <div className='center small-txt'>
-        Note: Your starting team, transfers and start GW are stored as cookies.
       </div>
       {renderGameWeek()}
     </div>
